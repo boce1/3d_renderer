@@ -20,12 +20,13 @@ pg.display.set_caption("Renderer")
 #
 #p1 = Point(0, 10, 0, RED)
 #p2 = Point(10, 0, 0, GREEN)
-p3 = Point(0, 0, 20, RED)
+p3 = Point(20, 0, 0, RED)
 #
 #t1 = Triangle(p1, p2, p3)
 #
 
-c = Cube(p3, 10, 10, 10)
+c1 = Cube(p3, 10, 10, 10)
+c2 = Cube(Point(-20, 0, 0, GREEN), 10,10,10)
 
 angle = pi / 180
 
@@ -37,7 +38,9 @@ def draw(win):
     # p1.draw(win)
     # p2.draw(win)
     #t1.draw(win, True)
-    c.draw(win)
+    c1.draw(win)
+    c2.draw(win)
+
     pg.display.update()
 
 run = True
@@ -53,8 +56,12 @@ while run:
     #rotate_y(t1, angle)
     #rotate_z(t1, angle)
 
-    rotate_x(c, angle)
-    rotate_y(c, angle)
-    rotate_z(c, angle)
+    rotate_x(c1, angle, True)
+    rotate_y(c1, angle, True)
+    rotate_z(c1, angle, True)
+
+    rotate_x(c2, angle, False)
+    rotate_y(c2, angle, False)
+    rotate_z(c2, angle, False)
     #angle += 0.1
 pg.quit()

@@ -1,6 +1,7 @@
 from triangle import *
 from point import *
 from constants import *
+from math3d import center_of_mass
 import pygame as pg
 
 class Cube:
@@ -30,9 +31,13 @@ class Cube:
                         self.top_left_back_point,
                         self.bottom_right_back_point]
 
+        self.center = center_of_mass(self.points)
+        self.points.append(self.center)
+
     def draw(self, win, draw_countuor=True):
         for p in self.points:
             p.draw(win)
+        self.center.draw(win)
         
         if draw_countuor:
             self.draw_countuor(win)

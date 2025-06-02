@@ -26,9 +26,11 @@ class Point:
         self.projection_cords = (self.projection_x, self.projection_y)
 
     def update_color(self):
-        coef = FOV / (FOV + DARK_COLOR_INTENSITY * self.z)
-        if coef > 1 or coef < 0:
+        if self.z <= 0:
             coef = 1
+        else:
+            coef = FOV / (FOV + DARK_COLOR_INTENSITY * self.z)
+
         for i in range(3):
             self.render_color[i] = int(self.color[i] * coef)
 
