@@ -26,7 +26,8 @@ p3 = Point(20, 0, 0, RED)
 #
 
 c1 = Cube(p3, 10, 10, 10)
-c2 = Cube(Point(-20, 0, 0, GREEN), 10,10,10)
+c2 = Cube(Point(-20, 15, -5, GREEN), 10,10,10)
+c3 = Cube(Point(-20, -20, 15, BLUE), 20, 10, 5)
 
 angle = pi / 180
 
@@ -40,7 +41,7 @@ def draw(win):
     #t1.draw(win, True)
     c1.draw(win)
     c2.draw(win)
-
+    c3.draw(win)
     pg.display.update()
 
 run = True
@@ -60,8 +61,12 @@ while run:
     rotate_y(c1, angle, True)
     rotate_z(c1, angle, True)
 
-    rotate_x(c2, angle, False)
+    rotate_x(c2, angle, True)
     rotate_y(c2, angle, False)
-    rotate_z(c2, angle, False)
+    rotate_z(c2, angle, True)
+
+    rotate_x(c3, angle, False)
+    rotate_y(c3, angle, False)
+    rotate_z(c3, angle, False)
     #angle += 0.1
 pg.quit()
