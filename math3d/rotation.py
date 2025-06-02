@@ -15,29 +15,29 @@ def multiply_matrices(point, rotation_matrix):
 # rotating y from the ordinary coordinating system is like rotating z
 # rotating z from the ordinary coordinating system is like rotating y
 
-def rotate_x(triangle, angle):
+def rotate_x(entity, angle):
     rotate_x_matrix = [[1, 0, 0],
                        [0, cos(angle), -sin(angle)],
                        [0, sin(angle), cos(angle)]]
     
-    for point in triangle.points:
+    for point in entity.points:
         new_cords = multiply_matrices(point, rotate_x_matrix)
         point.update_cords(new_cords)
 
-def rotate_y(triangle, angle):
+def rotate_y(entity, angle):
     rotate_y_matrix = [[cos(angle), 0, sin(angle)],
                        [0, 1, 0],
                        [-sin(angle), 0, cos(angle)]]
     
-    for point in triangle.points:
+    for point in entity.points:
         new_cords = multiply_matrices(point, rotate_y_matrix)
         point.update_cords(new_cords)
 
-def rotate_z(triangle, angle):
+def rotate_z(entity, angle):
     rotate_z_matrix = [[cos(angle), -sin(angle), 0],
                        [sin(angle), cos(angle), 0],
                        [0, 0, 1]]
     
-    for point in triangle.points:
+    for point in entity.points:
         new_cords = multiply_matrices(point, rotate_z_matrix)
         point.update_cords(new_cords)

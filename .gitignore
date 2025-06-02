@@ -2,3 +2,6 @@ constants/__pycache__
 math3d/__pycache__
 point/__pycache__
 triangle/__pycache__
+body/__pycache__
+body/cube/__pycache__
+body/pyramid/__pycache__
