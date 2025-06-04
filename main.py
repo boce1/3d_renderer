@@ -41,8 +41,8 @@ while run:
         if event.type == pg.QUIT:
             run = False
 
-    rotate_x(t1, angle, True)
-    rotate_y(t1, angle, True)
+    rotate_x(t1, angle, False)
+    rotate_y(t1, angle, False)
     #rotate_z(t1, angle, True)
 
     #rotate_x(c1, angle, True)

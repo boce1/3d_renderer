@@ -123,27 +123,24 @@ class Triangle:
 
 
     def calculate_colors_on_lines(self, point1, point2, n):
+        colors = []
         if n > 0:
-            colors = []
-
             for i in range(n+1):
                 red = int(point1.render_color[0] * (n - i) / n + point2.render_color[0] * i / n) % 256
                 green = int(point1.render_color[1] * (n - i) / n + point2.render_color[1] * i / n) % 256
                 blue = int(point1.render_color[2] * (n - i) / n + point2.render_color[2] * i / n) % 256
 
                 colors.append((red, green, blue))
-            return colors
-        return []
+        return colors
     
     def calculate_color_inside(self, color_tuple1, color_tuple2, x):
+        colors = []
         if x > 0:
-            colors = []
             for i in range(x):
                 red = int(color_tuple1[0] * (x - i) / x + color_tuple2[0] * i / x) % 256
                 green = int(color_tuple1[1] * (x - i) / x + color_tuple2[1] * i / x) % 256
                 blue = int(color_tuple1[2] * (x - i) / x + color_tuple2[2] * i / x) % 256
 
                 colors.append((red, green, blue))
-            return colors
-        return [(0, 0, 0)]
+        return colors
 
