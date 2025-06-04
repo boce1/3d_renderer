@@ -1,6 +1,7 @@
 import pygame as pg
 from constants import *
 from math3d import projection_cords
+from math import ceil
 
 class Triangle:
     def __init__(self, point1, point2, point3):
@@ -45,17 +46,43 @@ class Triangle:
         x_middle, y_middle = projection_cords(middle_point)
      
         # bottom point
-        x_bottom, y_bottom = projection_cords(bottom_points[0])
+        bottom_point = bottom_points[0]
+        x_bottom, y_bottom = projection_cords(bottom_point)
 
+        # colors
+        n_top_mid = int(y_middle - y_hightest)
+        colors_top_middle = self.calculate_colors_on_lines(heightest_point, middle_point, n_top_mid)
+        
+        n_top_bottom = int(y_bottom - y_hightest)
+        colors_top_bottom = self.calculate_colors_on_lines(heightest_point, bottom_point, n_top_bottom)
+
+        n_middle_bottom = int(y_bottom - y_middle)
+        colors_middle_bottom = self.calculate_colors_on_lines(middle_point, bottom_point, n_middle_bottom)
+        
+
+        # # #
         # draw top to middle
         slope_top_p1 = (x_highest - x_middle) / (y_hightest - y_middle)
         slope_top_p2 = (x_highest - x_bottom) / (y_hightest - y_bottom)
         
         current_x1 = x_highest
         current_x2 = x_highest
-        n = int(y_hightest - x_middle)
+        color_index = 0
         for y in range(int(y_hightest), int(y_middle)):
-            pg.draw.line(win, BLACK, (current_x1, y), (current_x2, y), 1)
+            line_width = int(ceil(abs(current_x1 - current_x2)))
+            color1 = colors_top_middle[color_index]
+            color2 = colors_top_bottom[color_index]
+            color_index += 1
+
+            if x_middle < x_bottom:
+                line_colors = self.calculate_color_inside(color1, color2, line_width)
+            else:
+                line_colors = self.calculate_color_inside(color2, color1, line_width)
+
+            line_x_min = int(min(current_x1, current_x2))
+            for i in range(line_width):
+                pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
+            
             current_x1 += slope_top_p1
             current_x2 += slope_top_p2
 
@@ -72,3 +99,25 @@ class Triangle:
                 pg.draw.line(win, BLACK, (current_x1_bottom, y), (current_x2_bottom, y), 1)
                 current_x1_bottom -= slope_middle_p1
                 current_x2_bottom -= slope_middle_p2  
+
+    def calculate_colors_on_lines(self, point1, point2, n):
+        colors = []
+        for i in range(n):
+            red = int(point1.render_color[0] * (n - i) / n + point2.render_color[0] * i / n) % 256
+            green = int(point1.render_color[1] * (n - i) / n + point2.render_color[1] * i / n) % 256
+            blue = int(point1.render_color[2] * (n - i) / n + point2.render_color[2] * i / n) % 256
+
+            colors.append((red, green, blue))
+        return colors
+    
+    def calculate_color_inside(self, color_tuple1, color_tuple2, x):
+        colors = []
+        if x > 0:
+            for i in range(x):
+                red = int(color_tuple1[0] * (x - i) / x + color_tuple2[0] * i / x) % 256
+                green = int(color_tuple1[1] * (x - i) / x + color_tuple2[1] * i / x) % 256
+                blue = int(color_tuple1[2] * (x - i) / x + color_tuple2[2] * i / x) % 256
+
+                colors.append((red, green, blue))
+        return colors
+
