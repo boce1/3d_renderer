@@ -10,4 +10,4 @@ def projection_cords(point):
     x += WIDTH // 2 # move it to center
     y = HEIGHT // 2 - y # move it to center and  multiply to (1, -1) vector to rotate it
 
-    return (x, y)
+    return (int(x), int(y))

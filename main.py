@@ -16,9 +16,9 @@ c1 = Cube(Point(20, 0, 0, RED), 10, 10, 10)
 c2 = Cube(Point(-20, 15, -5, GREEN), 10,10,10)
 c3 = Cube(Point(-20, -20, 15, BLUE), 20, 10, 5)
 
-angle = -pi / 180
+angle = pi / 45
 
-t1 = Triangle(Point(0,20, 0, RED), Point(-20, -15, 0, GREEN), Point(5, 0, 0, BLUE))
+t1 = Triangle(Point(0,-20, 0, RED), Point(-20, 15, 10, GREEN), Point(5, 0, -10, BLUE))
 
 def draw(win):
     win.fill(WHITE)
@@ -41,7 +41,10 @@ while run:
         if event.type == pg.QUIT:
             run = False
 
-    
+    rotate_x(t1, angle, True)
+    rotate_y(t1, angle, True)
+    #rotate_z(t1, angle, True)
+
     #rotate_x(c1, angle, True)
     #rotate_y(c1, angle, True)
     #rotate_z(c1, angle, True)
