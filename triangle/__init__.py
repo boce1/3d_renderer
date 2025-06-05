@@ -51,15 +51,15 @@ class Triangle:
         # bottom point
         bottom_point = bottom_points[0]
         x_bottom, y_bottom = projection_cords(bottom_point)
-
+        
         # colors
-        n_top_mid = int(floor(y_middle - y_hightest)) + 1
+        n_top_mid = y_middle - y_hightest
         colors_top_middle = self.calculate_colors_on_lines(heightest_point, middle_point, n_top_mid)
         
-        n_top_bottom = int(floor(y_bottom - y_hightest)) + 1
+        n_top_bottom = y_bottom - y_hightest
         colors_top_bottom = self.calculate_colors_on_lines(heightest_point, bottom_point, n_top_bottom)
 
-        n_middle_bottom = int(floor(y_bottom - y_middle)) + 1
+        n_middle_bottom = y_bottom - y_middle
         colors_middle_bottom = self.calculate_colors_on_lines(bottom_point, middle_point, n_middle_bottom)
     
         # # #
@@ -74,17 +74,17 @@ class Triangle:
             current_x1 = x_highest
             current_x2 = x_highest
             color_index = 0
-            for y in range(int(y_hightest), int(y_middle)):
-                line_width = int(ceil(abs(current_x1 - current_x2)))
-                if 0 <= color_index < len(colors_top_middle):
-                    color1 = colors_top_middle[color_index]
-                else:
-                    color1 = BLACK
-                if color_index < len(colors_top_bottom):
+
+            for y in range(y_hightest, y_middle):
+                line_width = ceil(abs(current_x1 - current_x2))
+  
+                color1 = colors_top_middle[color_index]
+                if color_index < len(colors_top_bottom): # edge case where y_middle is bellow y_bottom
                     color2 = colors_top_bottom[color_index]
-                else:
-                    color2 = BLACK
+                else: 
+                    color2 = middle_point.render_color
                 color_index += 1
+
                 if x_middle < x_bottom:
                     line_colors = self.calculate_color_inside(color1, color2, line_width)
                 else:
@@ -101,7 +101,6 @@ class Triangle:
 
     # draw middle to bottom
         if abs(y_bottom - y_middle) > PIXEL_LIMIT_DISTANCE:
-
             if not current_x2:
                 current_x2 = x_highest
             if not color_index:
@@ -114,20 +113,19 @@ class Triangle:
             current_x2_bottom = x_bottom
             color_index_bottom = 0
             
-            for y in range(int(y_bottom), int(y_middle)-1, -1):
+            for y in range(y_bottom, y_middle - 1, -1):
 
-                line_width = int(ceil(abs(current_x1_bottom - current_x2_bottom)))
-                #print(n_top_bottom - color_index_bottom, len(colors_top_bottom))
-                if 0 <= n_top_bottom - color_index_bottom < len(colors_top_bottom):
+                line_width = ceil(abs(current_x1_bottom - current_x2_bottom))
+                
+                if 0 <= n_top_bottom - color_index_bottom < len(colors_top_bottom): # edge case where y_middle is bellow y_bottom
                     color1 = colors_top_bottom[n_top_bottom - color_index_bottom]
                 else:
-                    color1 = BLACK
-                if color_index_bottom < len(colors_middle_bottom):
-                    color2 = colors_middle_bottom[color_index_bottom]
-                else:
-                    color2 = BLACK
+                    color1 = bottom_point.render_color
+                color2 = colors_middle_bottom[color_index_bottom]
+                
                 color_index -= 1
                 color_index_bottom += 1
+
                 if x_middle > x_bottom:
                     line_colors = self.calculate_color_inside(color1, color2, line_width)
                 else:
