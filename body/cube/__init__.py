@@ -35,9 +35,7 @@ class Cube:
         self.points.append(self.center)
 
     def draw(self, win, draw_countuor=True):
-        for p in self.points:
-            p.draw(win)
-        self.center.draw(win)
+        self.draw_triangles(win)
         
         if draw_countuor:
             self.draw_countuor(win)
@@ -61,3 +59,38 @@ class Cube:
         pg.draw.line(win, BLACK, self.top_left_back_point.projection_cords, self.bottom_left_back_point.projection_cords)
         pg.draw.line(win, BLACK, self.top_right_back_point.projection_cords, self.bottom_right_back_point.projection_cords)
         
+
+    def draw_triangles(self, win):
+        t1_front = Triangle(self.bottom_left_front_point, self.bottom_right_front_point, self.top_left_front_point)
+        t2_front = Triangle(self.top_left_front_point, self.top_right_front_point, self.bottom_right_front_point)
+
+        t1_top = Triangle(self.top_left_front_point, self.top_right_front_point, self.top_right_back_point)
+        t2_top = Triangle(self.top_right_back_point, self.top_left_back_point, self.top_left_front_point)
+
+        t1_left = Triangle(self.bottom_left_front_point, self.bottom_left_back_point, self.top_left_back_point)
+        t2_left = Triangle(self.top_left_back_point, self.top_left_front_point, self.bottom_left_front_point)
+
+        t1_right = Triangle(self.bottom_right_front_point, self.bottom_right_back_point, self.top_right_back_point)
+        t2_right = Triangle(self.top_right_back_point, self.top_right_front_point, self.bottom_right_front_point)
+
+        t1_bottom = Triangle(self.bottom_left_front_point, self.bottom_right_front_point, self.bottom_left_back_point)
+        t2_bottom = Triangle(self.bottom_left_back_point, self.bottom_right_back_point, self.bottom_right_front_point)
+
+        t1_top = Triangle(self.top_left_front_point, self.top_right_front_point, self.top_left_back_point)
+        t2_top = Triangle(self.top_left_back_point, self.top_right_back_point, self.top_right_front_point)
+
+        t1_front.draw(win)
+        t2_front.draw(win)
+        t1_top.draw(win)
+        t2_top.draw(win)
+        t1_left.draw(win)
+        t2_left.draw(win)
+        t1_right.draw(win)
+        t2_right.draw(win)
+        t1_bottom.draw(win)
+        t2_bottom.draw(win)
+        t1_top.draw(win)
+        t2_top.draw(win)
+
+        # TO DO: optimaze rasterization, add threads
+
