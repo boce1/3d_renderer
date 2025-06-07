@@ -23,8 +23,8 @@ t1 = Triangle(Point(-20,0, 0, RED), Point(-20, 15, 10, GREEN), Point(20, 5, -10,
 def draw(win):
     win.fill(WHITE)
 
-    c1.draw(win)
-    #c2.draw(win)
+    #c1.draw(win)
+    c2.draw(win)
     #c3.draw(win)
 
     #t1.draw(win, True)

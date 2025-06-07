@@ -34,7 +34,7 @@ class Triangle:
         # top point
         heightest_point = self.p1
         for p in self.points:
-            if p.y > heightest_point.y:
+            if p.projection_y < heightest_point.projection_y:
                 heightest_point = p
         
         bottom_points = [p for p in self.points]
@@ -43,11 +43,11 @@ class Triangle:
 
         # middle point
         middle_point = bottom_points[0]
-        if bottom_points[1].y > middle_point.y:
+        if bottom_points[1].projection_y < middle_point.projection_y:
             middle_point = bottom_points[1]
         bottom_points.remove(middle_point)
         x_middle, y_middle = projection_cords(middle_point)
-     
+    
         # bottom point
         bottom_point = bottom_points[0]
         x_bottom, y_bottom = projection_cords(bottom_point)
@@ -64,79 +64,75 @@ class Triangle:
     
         # # #
         # draw top to middle
-        current_x1 = None
-        current_x2 = None
-        color_index = None
+        slope_top_p1 = 0
+        slope_top_p2 = 0
 
-        if abs(y_hightest - y_middle) > PIXEL_LIMIT_DISTANCE and abs(y_hightest - y_bottom) > PIXEL_LIMIT_DISTANCE:
+        if y_hightest != y_middle:
             slope_top_p1 = (x_highest - x_middle) / (y_hightest - y_middle)
+        if y_hightest != y_bottom:
             slope_top_p2 = (x_highest - x_bottom) / (y_hightest - y_bottom)
-            current_x1 = x_highest
-            current_x2 = x_highest
-            color_index = 0
+        current_x1 = x_highest
+        current_x2 = x_highest
+        color_index = 0
 
-            for y in range(y_hightest, y_middle):
-                line_width = ceil(abs(current_x1 - current_x2))
+        for y in range(y_hightest, y_middle):
+            line_width = ceil(abs(current_x1 - current_x2))
   
-                color1 = colors_top_middle[color_index]
-                if color_index < len(colors_top_bottom): # edge case where y_middle is bellow y_bottom
-                    color2 = colors_top_bottom[color_index]
-                else: 
-                    color2 = middle_point.render_color
-                color_index += 1
+            color1 = colors_top_middle[color_index]
+            color2 = colors_top_bottom[color_index]
+            color_index += 1
 
-                if x_middle < x_bottom:
-                    line_colors = self.calculate_color_inside(color1, color2, line_width)
-                else:
-                    line_colors = self.calculate_color_inside(color2, color1, line_width)
+            if x_middle < x_bottom:
+                line_colors = self.calculate_color_inside(color1, color2, line_width)
+            else:
+                line_colors = self.calculate_color_inside(color2, color1, line_width)
 
 
-                line_x_min = int(min(current_x1, current_x2))
-                for i in range(line_width):
-                    pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
-                current_x1 += slope_top_p1
-                current_x2 += slope_top_p2
+            line_x_min = int(min(current_x1, current_x2))
+            for i in range(line_width):
+                pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
+            current_x1 += slope_top_p1
+            current_x2 += slope_top_p2
 
-    # current_x2 is the point where its equal to x_middle but for seconds line
+        # current_x2 is the point where its equal to x_middle but for seconds line
 
-    # draw middle to bottom
-        if abs(y_bottom - y_middle) > PIXEL_LIMIT_DISTANCE:
-            if not current_x2:
-                current_x2 = x_highest
-            if not color_index:
-                color_index = 0
+        # draw middle to bottom
+        slope_middle_p1 = 0
+        slope_middle_p2 = 0
 
+        if y_bottom != y_middle:
             slope_middle_p1 = (x_bottom - x_middle) / (y_bottom - y_middle)
             slope_middle_p2 = (x_bottom - current_x2) / (y_bottom - y_middle)
         
-            current_x1_bottom = x_bottom
-            current_x2_bottom = x_bottom
-            color_index_bottom = 0
+        current_x1_bottom = x_bottom
+        current_x2_bottom = x_bottom
+        color_index_bottom = 0
+         
+        for y in range(y_bottom, y_middle - 1, -1):
+
+            line_width = ceil(abs(current_x1_bottom - current_x2_bottom))
             
-            for y in range(y_bottom, y_middle - 1, -1):
+            color1 = colors_top_bottom[n_top_bottom - color_index_bottom]
 
-                line_width = ceil(abs(current_x1_bottom - current_x2_bottom))
-                
-                if 0 <= n_top_bottom - color_index_bottom < len(colors_top_bottom): # edge case where y_middle is bellow y_bottom
-                    color1 = colors_top_bottom[n_top_bottom - color_index_bottom]
-                else:
-                    color1 = bottom_point.render_color
+            if len(colors_middle_bottom) > 0:
                 color2 = colors_middle_bottom[color_index_bottom]
-                
-                color_index -= 1
-                color_index_bottom += 1
+            else:
+                color2 = middle_point.render_color
+            
+            color_index -= 1
+            color_index_bottom += 1
 
-                if x_middle > x_bottom:
-                    line_colors = self.calculate_color_inside(color1, color2, line_width)
-                else:
-                    line_colors = self.calculate_color_inside(color2, color1, line_width)
+            if x_middle > x_bottom:
+                line_colors = self.calculate_color_inside(color1, color2, line_width)
+            else:
+                line_colors = self.calculate_color_inside(color2, color1, line_width)
 
-                line_x_min = int(min(current_x1_bottom, current_x2_bottom))
-                for i in range(line_width):
-                    pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
-                # color2 above is for top to bottom, color_index is the last visited color and thats where it starts coloring for the bottom triable
-                current_x1_bottom -= slope_middle_p1
-                current_x2_bottom -= slope_middle_p2 
+            line_x_min = int(min(current_x1_bottom, current_x2_bottom))
+            for i in range(line_width):
+                pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
+            # color2 above is for top to bottom, color_index is the last visited color and thats where it starts coloring for the bottom triable
+            current_x1_bottom -= slope_middle_p1
+            current_x2_bottom -= slope_middle_p2 
 
 
     def calculate_colors_on_lines(self, point1, point2, n):
@@ -152,12 +148,10 @@ class Triangle:
     
     def calculate_color_inside(self, color_tuple1, color_tuple2, x):
         colors = []
-        if x > 0:
-            for i in range(x):
-                red = int(color_tuple1[0] * (x - i) / x + color_tuple2[0] * i / x) % 256
-                green = int(color_tuple1[1] * (x - i) / x + color_tuple2[1] * i / x) % 256
-                blue = int(color_tuple1[2] * (x - i) / x + color_tuple2[2] * i / x) % 256
-
-                colors.append((red, green, blue))
+        for i in range(x):
+            red = int(color_tuple1[0] * (x - i) / x + color_tuple2[0] * i / x) % 256
+            green = int(color_tuple1[1] * (x - i) / x + color_tuple2[1] * i / x) % 256
+            blue = int(color_tuple1[2] * (x - i) / x + color_tuple2[2] * i / x) % 256
+            colors.append((red, green, blue))
         return colors
 
