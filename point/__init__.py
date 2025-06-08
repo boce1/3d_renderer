@@ -14,7 +14,7 @@ class Point:
         self.projection_cords = (self.projection_x, self.projection_y)
 
     def draw(self, win):
-        #pg.draw.circle(win, self.render_color, (self.projection_x , self.projection_y), 7)
+        pg.draw.circle(win, self.render_color, (self.projection_x , self.projection_y), 7)
         self.update_color()
 
     def update_cords(self, new_cords):

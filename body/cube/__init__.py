@@ -58,12 +58,12 @@ class Cube:
         t2_back = Triangle(self.bottom_right_back_point, self.top_right_back_point, self.top_left_back_point)
 
         triangles = [
-            t1_front, t2_front,
             t1_top, t2_top,
+            t1_bottom, t2_bottom,
+            t1_back, t2_back,
             t1_left, t2_left,
             t1_right, t2_right,
-            t1_bottom, t2_bottom,
-            t1_back, t2_back ] 
+            t1_front, t2_front ] 
 
         n = len(triangles)
         for i in range(n):
