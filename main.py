@@ -14,11 +14,9 @@ pg.display.set_caption("Renderer")
 
 c1 = Cube(Point(20, 0, 0, RED), 10, 10, 10)
 c2 = Cube(Point(-20, 15, -5, GREEN), 10,10,10)
-c3 = Cube(Point(-20, -20, 15, BLUE), 20, 10, 5)
+c3 = Cube(Point(0, -20, 15, BLUE), 10, 10, 10)
 
 angle = pi / 90
-camera_vector = (0, 0, -1)
-
 
 t1 = Triangle(Point(0 ,0, 0, RED), Point(-10, 5, 0, GREEN), Point(10, 5, 0, BLUE))
 
@@ -26,10 +24,10 @@ def draw(win):
     win.fill(WHITE)
 
     c1.draw(win)
-    c2.draw(win)
-    #c3.draw(win)
+    #c2.draw(win)
+    c3.draw(win)
 
-    t1.draw(win)
+    #t1.draw(win)
 
     pg.display.update()
 
@@ -44,17 +42,17 @@ while run:
 
 
 
-    rotate_x(t1, angle, False)
-    rotate_y(t1, angle, False)
+    #rotate_x(t1, angle, False)
+    #rotate_y(t1, angle, False)
     #rotate_z(t1, angle, True)
 
     rotate_x(c1, angle, True)
-    rotate_y(c1, angle, True)
+    #rotate_y(c1, angle, True)
     rotate_z(c1, angle, True)
 #
-    rotate_x(c2, angle, True)
+    #rotate_x(c2, angle, True)
     rotate_y(c2, angle, False)
-    rotate_z(c2, angle, True)
+    #rotate_z(c2, angle, True)
 #
     rotate_x(c3, angle, False)
     rotate_y(c3, angle, False)

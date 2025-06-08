@@ -69,3 +69,10 @@ class Cube:
         for i in range(n):
             if not is_facing_away(normal_vector(triangles[i])):
                 triangles[i].draw(win)
+                if i % 2 == 0:
+                    pg.draw.line(win, BLACK, triangles[i].p1.projection_cords, triangles[i].p3.projection_cords, 3)
+                    pg.draw.line(win, BLACK, triangles[i].p2.projection_cords, triangles[i].p3.projection_cords, 3)
+                else:
+                    pg.draw.line(win, BLACK, triangles[i].p1.projection_cords, triangles[i].p2.projection_cords, 3)
+                    pg.draw.line(win, BLACK, triangles[i].p2.projection_cords, triangles[i].p3.projection_cords, 3)
+

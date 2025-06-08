@@ -1,7 +1,7 @@
 import pygame as pg
 from constants import *
 from math3d import projection_cords, center_of_mass
-from math import ceil, floor
+from math import ceil
 
 class Triangle:
     def __init__(self, point1, point2, point3):
@@ -16,10 +16,6 @@ class Triangle:
 
     def draw(self, win):
         self.draw_lines(win)
-
-        pg.draw.line(win, BLACK, self.p1.projection_cords, self.p3.projection_cords, 1)
-        pg.draw.line(win, BLACK, self.p2.projection_cords, self.p3.projection_cords, 1)
-        pg.draw.line(win, BLACK, self.p1.projection_cords, self.p2.projection_cords, 1)
 
     def draw_lines(self, win):
         self.p1.update_color()

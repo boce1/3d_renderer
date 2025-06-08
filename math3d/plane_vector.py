@@ -1,4 +1,5 @@
-from math import acos, sqrt, pi
+from math import acos, pi
+from constants import FOV
 
 def cross_product(v1_tuple, v2_tuple):
     prod = []
@@ -16,14 +17,14 @@ def normal_vector(triangle):
 
 def angle_y(normal_vector_tuple):
     x, y, z = normal_vector_tuple
-    magnitude = sqrt(x**2 + y**2 + z**2)
+    magnitude = (x**2 + y**2 + z**2)**0.5
     if magnitude == 0:
         return 0
     return acos(y / magnitude) 
 
 def angle_x(normal_vector_tuple):
     x, y, z = normal_vector_tuple
-    magnitude = sqrt(x**2 + y**2 + z**2)
+    magnitude = (x**2 + y**2 + z**2)**0.5
     if magnitude == 0:
         return 0
     return acos(x / magnitude) 
