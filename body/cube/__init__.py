@@ -1,7 +1,7 @@
 from triangle import *
 from point import *
 from constants import *
-from math3d import center_of_mass
+from math3d import *
 import pygame as pg
 
 class Cube:
@@ -34,63 +34,38 @@ class Cube:
         self.center = center_of_mass(self.points)
         self.points.append(self.center)
 
-    def draw(self, win, draw_countuor=True):
+    def draw(self, win):
         self.draw_triangles(win)
-        
-        if draw_countuor:
-            self.draw_countuor(win)
-
-    def draw_countuor(self, win): 
-        # bottom side
-        pg.draw.line(win, BLACK, self.bottom_left_front_point.projection_cords, self.bottom_right_front_point.projection_cords)
-        pg.draw.line(win, BLACK, self.bottom_left_front_point.projection_cords, self.bottom_left_back_point.projection_cords)
-        pg.draw.line(win, BLACK, self.bottom_left_back_point.projection_cords, self.bottom_right_back_point.projection_cords)
-        pg.draw.line(win, BLACK, self.bottom_right_front_point.projection_cords, self.bottom_right_back_point.projection_cords)
-        
-        # top side
-        pg.draw.line(win, BLACK, self.top_left_front_point.projection_cords, self.top_right_front_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_left_front_point.projection_cords, self.top_left_back_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_left_back_point.projection_cords, self.top_right_back_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_right_front_point.projection_cords, self.top_right_back_point.projection_cords)
-
-        # sides
-        pg.draw.line(win, BLACK, self.top_left_front_point.projection_cords, self.bottom_left_front_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_right_front_point.projection_cords, self.bottom_right_front_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_left_back_point.projection_cords, self.bottom_left_back_point.projection_cords)
-        pg.draw.line(win, BLACK, self.top_right_back_point.projection_cords, self.bottom_right_back_point.projection_cords)
-        
 
     def draw_triangles(self, win):
-        t1_front = Triangle(self.bottom_left_front_point, self.bottom_right_front_point, self.top_left_front_point)
+        t1_front = Triangle(self.top_left_front_point, self.bottom_right_front_point, self.bottom_left_front_point) # front
         t2_front = Triangle(self.top_left_front_point, self.top_right_front_point, self.bottom_right_front_point)
 
-        t1_top = Triangle(self.top_left_front_point, self.top_right_front_point, self.top_right_back_point)
-        t2_top = Triangle(self.top_right_back_point, self.top_left_back_point, self.top_left_front_point)
+        t1_top = Triangle(self.top_left_front_point, self.top_right_back_point, self.top_right_front_point) # top
+        t2_top = Triangle(self.top_left_front_point, self.top_left_back_point, self.top_right_back_point) 
 
-        t1_left = Triangle(self.bottom_left_front_point, self.bottom_left_back_point, self.top_left_back_point)
+        t1_left = Triangle(self.top_left_back_point, self.bottom_left_front_point, self.bottom_left_back_point) # left
         t2_left = Triangle(self.top_left_back_point, self.top_left_front_point, self.bottom_left_front_point)
 
-        t1_right = Triangle(self.bottom_right_front_point, self.bottom_right_back_point, self.top_right_back_point)
-        t2_right = Triangle(self.top_right_back_point, self.top_right_front_point, self.bottom_right_front_point)
+        t1_right = Triangle(self.bottom_right_front_point, self.top_right_back_point, self.bottom_right_back_point) # right
+        t2_right = Triangle(self.bottom_right_front_point, self.top_right_front_point, self.top_right_back_point) 
+            
 
-        t1_bottom = Triangle(self.bottom_left_front_point, self.bottom_right_front_point, self.bottom_left_back_point)
-        t2_bottom = Triangle(self.bottom_left_back_point, self.bottom_right_back_point, self.bottom_right_front_point)
+        t1_bottom = Triangle(self.bottom_right_front_point, self.bottom_left_back_point, self.bottom_left_front_point) # bottom
+        t2_bottom = Triangle(self.bottom_right_front_point, self.bottom_right_back_point, self.bottom_left_back_point)
 
-        t1_top = Triangle(self.top_left_front_point, self.top_right_front_point, self.top_left_back_point)
-        t2_top = Triangle(self.top_left_back_point, self.top_right_back_point, self.top_right_front_point)
+        t1_back = Triangle(self.bottom_right_back_point, self.top_left_back_point, self.bottom_left_back_point) # back
+        t2_back = Triangle(self.bottom_right_back_point, self.top_right_back_point, self.top_left_back_point)
 
-        t1_front.draw(win)
-        t2_front.draw(win)
-        t1_top.draw(win)
-        t2_top.draw(win)
-        t1_left.draw(win)
-        t2_left.draw(win)
-        t1_right.draw(win)
-        t2_right.draw(win)
-        t1_bottom.draw(win)
-        t2_bottom.draw(win)
-        t1_top.draw(win)
-        t2_top.draw(win)
+        triangles = [
+            t1_front, t2_front,
+            t1_top, t2_top,
+            t1_left, t2_left,
+            t1_right, t2_right,
+            t1_bottom, t2_bottom,
+            t1_back, t2_back ] 
 
-        # TO DO: optimaze rasterization, add threads
-
+        n = len(triangles)
+        for i in range(n):
+            if not is_facing_away(normal_vector(triangles[i])):
+                triangles[i].draw(win)

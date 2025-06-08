@@ -14,17 +14,12 @@ class Triangle:
         self.center = center_of_mass(self.points)
         self.points.append(self.center)
 
-    def draw(self, win, draw_points=False):
+    def draw(self, win):
         self.draw_lines(win)
 
-        if draw_points:
-            cords_list = [(self.p1.projection_x, self.p1.projection_y), 
-                          (self.p2.projection_x, self.p2.projection_y), 
-                          (self.p3.projection_x, self.p3.projection_y)]
-            pg.draw.polygon(win, self.outline_color, cords_list, width=2)
-            self.p1.draw(win)
-            self.p2.draw(win)
-            self.p3.draw(win)
+        pg.draw.line(win, BLACK, self.p1.projection_cords, self.p3.projection_cords, 1)
+        pg.draw.line(win, BLACK, self.p2.projection_cords, self.p3.projection_cords, 1)
+        pg.draw.line(win, BLACK, self.p1.projection_cords, self.p2.projection_cords, 1)
 
     def draw_lines(self, win):
         self.p1.update_color()
@@ -78,14 +73,14 @@ class Triangle:
         for y in range(y_hightest, y_middle):
             line_width = ceil(abs(current_x1 - current_x2))
   
-            #print(color_index // (n_top_mid // COLOR_SEGMENTS), len(colors_top_middle))
+            # + COLOR_SEGMENTS for indexation
             if n_top_mid > COLOR_SEGMENTS:
-                color1 = colors_top_middle[color_index // ((n_top_mid + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+                color1 = colors_top_middle[color_index // ((n_top_mid + COLOR_SEGMENTS) // COLOR_SEGMENTS)]
             else:
                 color1 = heightest_point.render_color
             
             if n_top_bottom > COLOR_SEGMENTS:
-                color2 = colors_top_bottom[color_index // ((n_top_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+                color2 = colors_top_bottom[color_index // ((n_top_bottom + COLOR_SEGMENTS) // COLOR_SEGMENTS)]
             else:
                 color2 = heightest_point.render_color
 
@@ -121,14 +116,14 @@ class Triangle:
 
             line_width = ceil(abs(current_x1_bottom - current_x2_bottom))
             if n_top_bottom > COLOR_SEGMENTS:
-                color1 = colors_top_bottom[(n_top_bottom - color_index_bottom) // ((n_top_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+                color1 = colors_top_bottom[(n_top_bottom - color_index_bottom) // ((n_top_bottom + COLOR_SEGMENTS) // COLOR_SEGMENTS)]
                 #color1 = heightest_point.render_color
 
             else:
                 color1 = heightest_point.render_color
 
             if n_middle_bottom > COLOR_SEGMENTS:
-                color2 = colors_middle_bottom[color_index_bottom // ((n_middle_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)] # +2 for color on 0-th place and +1 for index border
+                color2 = colors_middle_bottom[color_index_bottom // ((n_middle_bottom + COLOR_SEGMENTS) // COLOR_SEGMENTS)]
             else:
                 color2 = middle_point.render_color
             #print(color_index_bottom // COLOR_SEGMENTS % COLOR_SEGMENTS)
@@ -175,6 +170,6 @@ class Triangle:
     def draw_line(self, win, line_colors, line_x_min, line_width, y):
         for i in range(line_width):
             if line_width > COLOR_SEGMENTS:
-                pg.draw.rect(win, line_colors[i // ((line_width + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)], (line_x_min + i, y, 1, 1)) 
+                pg.draw.rect(win, line_colors[i // ((line_width + COLOR_SEGMENTS) // COLOR_SEGMENTS)], (line_x_min + i, y, 1, 1)) 
             else:
                 pg.draw.rect(win, line_colors[i % COLOR_SEGMENTS], (line_x_min + i, y, 1, 1)) 
