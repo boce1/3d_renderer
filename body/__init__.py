@@ -1,1 +1,5 @@
 from .cube import *
+
+def rainbow_body(entity, color_list):
+    for i in range(len(entity.points)):
+        entity.points[i].color = color_list[i % len(color_list)]
