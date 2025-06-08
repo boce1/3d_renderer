@@ -78,8 +78,17 @@ class Triangle:
         for y in range(y_hightest, y_middle):
             line_width = ceil(abs(current_x1 - current_x2))
   
-            color1 = colors_top_middle[color_index]
-            color2 = colors_top_bottom[color_index]
+            #print(color_index // (n_top_mid // COLOR_SEGMENTS), len(colors_top_middle))
+            if n_top_mid > COLOR_SEGMENTS:
+                color1 = colors_top_middle[color_index // ((n_top_mid + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+            else:
+                color1 = heightest_point.render_color
+            
+            if n_top_bottom > COLOR_SEGMENTS:
+                color2 = colors_top_bottom[color_index // ((n_top_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+            else:
+                color2 = heightest_point.render_color
+
             color_index += 1
 
             if x_middle < x_bottom:
@@ -89,8 +98,8 @@ class Triangle:
 
 
             line_x_min = int(min(current_x1, current_x2))
-            for i in range(line_width):
-                pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
+            self.draw_line(win, line_colors, line_x_min, line_width, y) 
+            
             current_x1 += slope_top_p1
             current_x2 += slope_top_p2
 
@@ -111,13 +120,18 @@ class Triangle:
         for y in range(y_bottom, y_middle - 1, -1):
 
             line_width = ceil(abs(current_x1_bottom - current_x2_bottom))
-            
-            color1 = colors_top_bottom[n_top_bottom - color_index_bottom]
+            if n_top_bottom > COLOR_SEGMENTS:
+                color1 = colors_top_bottom[(n_top_bottom - color_index_bottom) // ((n_top_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)]
+                #color1 = heightest_point.render_color
 
-            if len(colors_middle_bottom) > 0:
-                color2 = colors_middle_bottom[color_index_bottom]
+            else:
+                color1 = heightest_point.render_color
+
+            if n_middle_bottom > COLOR_SEGMENTS:
+                color2 = colors_middle_bottom[color_index_bottom // ((n_middle_bottom + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)] # +2 for color on 0-th place and +1 for index border
             else:
                 color2 = middle_point.render_color
+            #print(color_index_bottom // COLOR_SEGMENTS % COLOR_SEGMENTS)
             
             color_index -= 1
             color_index_bottom += 1
@@ -128,8 +142,8 @@ class Triangle:
                 line_colors = self.calculate_color_inside(color2, color1, line_width)
 
             line_x_min = int(min(current_x1_bottom, current_x2_bottom))
-            for i in range(line_width):
-                pg.draw.rect(win, line_colors[i], (line_x_min + i, y, 1, 1)) 
+            self.draw_line(win, line_colors, line_x_min, line_width, y)
+
             # color2 above is for top to bottom, color_index is the last visited color and thats where it starts coloring for the bottom triable
             current_x1_bottom -= slope_middle_p1
             current_x2_bottom -= slope_middle_p2 
@@ -137,21 +151,30 @@ class Triangle:
 
     def calculate_colors_on_lines(self, point1, point2, n):
         colors = []
-        if n > 0:
-            for i in range(n+1):
-                red = int(point1.render_color[0] * (n - i) / n + point2.render_color[0] * i / n) % 256
-                green = int(point1.render_color[1] * (n - i) / n + point2.render_color[1] * i / n) % 256
-                blue = int(point1.render_color[2] * (n - i) / n + point2.render_color[2] * i / n) % 256
+        if n > 0: # if levels are equal dont calcualte lines
+            for i in range(COLOR_SEGMENTS + 1):
+                red = int(point1.render_color[0] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + point2.render_color[0] * i / COLOR_SEGMENTS) % 256
+                green = int(point1.render_color[1] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + point2.render_color[1] * i / COLOR_SEGMENTS) % 256
+                blue = int(point1.render_color[2] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + point2.render_color[2] * i / COLOR_SEGMENTS) % 256
 
                 colors.append((red, green, blue))
-        return colors
+        else:
+            colors.append(point2.render_color)
+        
+        return colors 
     
-    def calculate_color_inside(self, color_tuple1, color_tuple2, x):
+    def calculate_color_inside(self, color_tuple1, color_tuple2, line_width):
         colors = []
-        for i in range(x):
-            red = int(color_tuple1[0] * (x - i) / x + color_tuple2[0] * i / x) % 256
-            green = int(color_tuple1[1] * (x - i) / x + color_tuple2[1] * i / x) % 256
-            blue = int(color_tuple1[2] * (x - i) / x + color_tuple2[2] * i / x) % 256
+        for i in range(COLOR_SEGMENTS):
+            red = int(color_tuple1[0] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + color_tuple2[0] * i / COLOR_SEGMENTS) % 256
+            green = int(color_tuple1[1] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + color_tuple2[1] * i / COLOR_SEGMENTS) % 256
+            blue = int(color_tuple1[2] * (COLOR_SEGMENTS - i) / COLOR_SEGMENTS + color_tuple2[2] * i / COLOR_SEGMENTS) % 256
             colors.append((red, green, blue))
         return colors
-
+    
+    def draw_line(self, win, line_colors, line_x_min, line_width, y):
+        for i in range(line_width):
+            if line_width > COLOR_SEGMENTS:
+                pg.draw.rect(win, line_colors[i // ((line_width + COLOR_SEGMENTS - 1) // COLOR_SEGMENTS)], (line_x_min + i, y, 1, 1)) 
+            else:
+                pg.draw.rect(win, line_colors[i % COLOR_SEGMENTS], (line_x_min + i, y, 1, 1)) 
