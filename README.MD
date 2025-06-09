@@ -28,65 +28,17 @@ To install Pygame, run the following command in your terminal or command prompt:
 ```
 
 ## Project Structure
-3d-renderer/
-
-├── body/ # 3D object definitions
-
-
-│ ├── init.py
-
-
-│ ├── cube/ # Cube implementation
-
-
-│ │ └── init.py
-
-
-│ └── pyramid/ # Pyramid implementation
-
-
-│ └── init.py
-
-
-│
-
-
-├── math3d/ # 3D math operations
-
-
-│ ├── init.py
-
-
-│ ├── projection.py # Projection calculations
-
-
-│ ├── rotation.py # Rotation transformations
-
-
-│ └── plane_vector.py # Visibility calculations
-
-
-│
-
-
-├── point/ # Point class
-
-
-│ └── init.py # Point implementation
-│
-
-
-├── triangle/ # Triangle class
-│ └── init.py # Rasterization implementation
-
-
-│
-├── constants/ # Render constants
-│ └── init.py # Configuration values
-
-
-│
-└── main.py # Main application entry point
+1. body/ *# 3D object definitions*
+- cube/ # Cube implementation
+- pyramid/ # Pyramid implementation
+2. math3d/ *# 3D math operations*
+- projection.py *# Projection calculations*
+- rotation.py *# Rotation transformations*
+- plane_vector.py *# Visibility calculations*
+3. point/ *# Point class*
+4. triangle/ *# Triangle class*
+5. constants/ *# Render constants*
+6. main.py *# Main application entry point*
 
 
 ## Customization
