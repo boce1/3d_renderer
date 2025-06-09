@@ -16,7 +16,7 @@ This project is a simple 3D renderer implemented in Python using Pygame. It feat
 - Python 3.x
 - pip 
 
-## Clone the repo
+### Clone the repo
 ```bash
    git clone https://github.com/boce1/3d_renderer.git
 ```
@@ -29,31 +29,35 @@ To install Pygame, run the following command in your terminal or command prompt:
 
 ## Project Structure
 .
-├── body/                      # Package containing 3D object definitions
-│   ├── __init__.py
-│   ├── cube/__init__.py       # Cube object implementation
-│   ├── pyramid/__init__.py    # Pyramid object implementation
-│       
-├── math3d/                    # Package for 3D math operations
-│   ├── __init__.py
-│   ├── projection.py          # Projection matrix and calculations
-│   ├── rotation.py            # Rotation transformations
-│   └── plane_vector.py        # Backface culling (visibility checks)
-|
-├── point/                     # Point class package
-│   └── __init__.py            # Point class implementation
-|
-├── triangle/__init__.py       # Triangle class for rasterization
-|
-├── constants/                 # Constants package
-│   └── __init__.py            # Essential rendering constants
-|
-└── main.py                    # Main script to run the renderer
+├── body/ # Package containing 3D object definitions
+│ ├── init.py
+│ ├── cube/ # Cube object implementation
+│ │ └── init.py
+│ └── pyramid/ # Pyramid object implementation
+│ └── init.py
+│
+├── math3d/ # Package for 3D math operations
+│ ├── init.py
+│ ├── projection.py # Projection matrix and calculations
+│ ├── rotation.py # Rotation transformations
+│ └── plane_vector.py # Backface culling (visibility checks)
+│
+├── point/ # Point class package
+│ └── init.py # Point class implementation
+│
+├── triangle/ # Triangle class for rasterization
+│ └── init.py
+│
+├── constants/ # Constants package
+│ └── init.py # Essential rendering constants
+│
+└── main.py # Main script to run the renderer
+
 
 ## Customization
 Color and FOV can be cahanged in the constants/ package
 
 ## Screenshot of what the renderer looks like
-![screechot](.scr.png)
+![screenshot](./scr.png)
 
-### TO DO: make demo video
+#### TO DO: make demo video
