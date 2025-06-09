@@ -30,26 +30,60 @@ To install Pygame, run the following command in your terminal or command prompt:
 ## Project Structure
 3d-renderer/
 ├── body/ # 3D object definitions
+
+
 │ ├── init.py
+
+
 │ ├── cube/ # Cube implementation
+
+
 │ │ └── init.py
+
+
 │ └── pyramid/ # Pyramid implementation
+
+
 │ └── init.py
+
+
 │
+
+
 ├── math3d/ # 3D math operations
+
+
 │ ├── init.py
+
+
 │ ├── projection.py # Projection calculations
+
+
 │ ├── rotation.py # Rotation transformations
+
+
 │ └── plane_vector.py # Visibility calculations
+
+
 │
+
+
 ├── point/ # Point class
+
+
 │ └── init.py # Point implementation
 │
+
+
 ├── triangle/ # Triangle class
 │ └── init.py # Rasterization implementation
+
+
 │
 ├── constants/ # Render constants
 │ └── init.py # Configuration values
+
+
 │
 └── main.py # Main application entry point
 
@@ -58,6 +92,6 @@ To install Pygame, run the following command in your terminal or command prompt:
 Color and FOV can be cahanged in the constants/ package
 
 ## Screenshot of what the renderer looks like
-![screenshot](./scr.png)
+![screenshot](scr.png)
 
 #### TO DO: make demo video
