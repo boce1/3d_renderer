@@ -93,6 +93,6 @@ To install Pygame, run the following command in your terminal or command prompt:
 Color and FOV can be cahanged in the constants/ package
 
 ## Screenshot of what the renderer looks like
-![screenshot](scr.png)
+![screenshot](scr.PNG)
 
 #### TO DO: make demo video
