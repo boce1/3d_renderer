@@ -29,6 +29,7 @@ To install Pygame, run the following command in your terminal or command prompt:
 
 ## Project Structure
 3d-renderer/
+
 ├── body/ # 3D object definitions
 
 
