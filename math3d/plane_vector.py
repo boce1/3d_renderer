@@ -1,5 +1,4 @@
 from math import acos, pi
-from constants import FOV
 
 def cross_product(v1_tuple, v2_tuple):
     prod = []
@@ -15,19 +14,21 @@ def normal_vector(triangle):
 
     return cross_product(vector_p1_p2, vector_p1_p3)
 
+def magnitude(vector):
+    x, y, z = vector
+    return (x**2 + y**2 + z**2)**0.5
+
 def angle_y(normal_vector_tuple):
-    x, y, z = normal_vector_tuple
-    magnitude = (x**2 + y**2 + z**2)**0.5
-    if magnitude == 0:
+    m = magnitude(normal_vector_tuple)
+    if m == 0:
         return 0
-    return acos(y / magnitude) 
+    return acos(normal_vector_tuple[1] / m) 
 
 def angle_x(normal_vector_tuple):
-    x, y, z = normal_vector_tuple
-    magnitude = (x**2 + y**2 + z**2)**0.5
-    if magnitude == 0:
+    m = magnitude(normal_vector_tuple)
+    if m == 0:
         return 0
-    return acos(x / magnitude) 
+    return acos(normal_vector_tuple[0] / m) 
 
 def is_facing_away(normal_vector_tuple, view_direction = (0,0,1)):
     dot_product = (
@@ -35,4 +36,5 @@ def is_facing_away(normal_vector_tuple, view_direction = (0,0,1)):
         normal_vector_tuple[1] * view_direction[1] +
         normal_vector_tuple[2] * view_direction[2]
     )
+
     return dot_product < 0
