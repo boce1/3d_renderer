@@ -53,19 +53,19 @@ while run:
             run = False
 
     rotate_x(c1, angle1, False, camera.possition)
-    #rotate_y(c1, angle1, True)
-    #rotate_z(c1, angle1, True)
-#
+    rotate_y(c1, angle1, True, camera.possition)
+    rotate_z(c1, angle1, True, camera.possition)
+
     rotate_x(c2, angle1, True, camera.possition)
-    #rotate_y(c2, angle2, False)
-    #rotate_z(c2, angle3, True)
-#
+    rotate_y(c2, angle2, False, camera.possition)
+    rotate_z(c2, angle3, True, camera.possition)
+
     rotate_x(c3, angle1, False, camera.possition)
-    #rotate_y(c3, angle2, True)
-#
+    rotate_y(c3, angle2, True, camera.possition)
+
     rotate_x(p1, angle2, True, camera.possition)
-    #rotate_y(p1, angle1, True)
-    #rotate_z(p1, angle3, True)
+    rotate_y(p1, angle1, True, camera.possition)
+    rotate_z(p1, angle3, True, camera.possition)
 
 pg.quit()
 

@@ -24,7 +24,6 @@ def rotate_x(entity, angle, rotate_around_center=True, camera_possition=Point(0,
                        [0, sin(angle), cos(angle)]]
     
     if rotate_around_center:
-        #body_center = Point(entity.center.x+camera_possition.x, entity.center.y+camera_possition.y, entity.center.z+camera_possition.z, BLACK)
         for point in entity.points:
             temp_point = Point(point.x - entity.center.x, 
                                point.y - entity.center.y, 
@@ -44,36 +43,54 @@ def rotate_x(entity, angle, rotate_around_center=True, camera_possition=Point(0,
             point.update_cords(new_cords)
 
 
-def rotate_y(entity, angle, rotate_around_center=True):
+def rotate_y(entity, angle, rotate_around_center=True, camera_possition=Point(0,0,0, BLACK)):
     rotate_y_matrix = [[cos(angle), 0, sin(angle)],
                        [0, 1, 0],
                        [-sin(angle), 0, cos(angle)]]
     
-    for point in entity.points:
-        if rotate_around_center:
-            temp_point = Point(point.x - entity.center.x, point.y - entity.center.y, point.z - entity.center.z, BLACK)
+    if rotate_around_center:
+        for point in entity.points:
+            temp_point = Point(point.x - entity.center.x, 
+                               point.y - entity.center.y, 
+                               point.z - entity.center.z, BLACK)
             new_cords = multiply_matrices(temp_point, rotate_y_matrix)
             new_cords = update_cord_list(new_cords, entity.center)
-        else:
-            new_cords = multiply_matrices(point, rotate_y_matrix)
 
-        point.update_cords(new_cords)
+            point.update_cords(new_cords)
+
+    else:
+        for point in entity.points:
+            temp_point = Point(point.x - camera_possition.x, 
+                               point.y - camera_possition.y, 
+                               point.z - camera_possition.z, BLACK)
+            new_cords = multiply_matrices(temp_point, rotate_y_matrix)
+            new_cords = update_cord_list(new_cords, camera_possition)
+            point.update_cords(new_cords)
 
 
-def rotate_z(entity, angle, rotate_around_center=True):
+def rotate_z(entity, angle, rotate_around_center=True, camera_possition=Point(0,0,0, BLACK)):
     rotate_z_matrix = [[cos(angle), -sin(angle), 0],
                        [sin(angle), cos(angle), 0],
                        [0, 0, 1]]
     
-    for point in entity.points:
-        if rotate_around_center:
-            temp_point = Point(point.x - entity.center.x, point.y - entity.center.y, point.z - entity.center.z, BLACK)
+    if rotate_around_center:
+        for point in entity.points:
+            temp_point = Point(point.x - entity.center.x, 
+                               point.y - entity.center.y, 
+                               point.z - entity.center.z, BLACK)
             new_cords = multiply_matrices(temp_point, rotate_z_matrix)
             new_cords = update_cord_list(new_cords, entity.center)
-        else:
-            new_cords = multiply_matrices(point, rotate_z_matrix)
 
-        point.update_cords(new_cords)
+            point.update_cords(new_cords)
+
+    else:
+        for point in entity.points:
+            temp_point = Point(point.x - camera_possition.x, 
+                               point.y - camera_possition.y, 
+                               point.z - camera_possition.z, BLACK)
+            new_cords = multiply_matrices(temp_point, rotate_z_matrix)
+            new_cords = update_cord_list(new_cords, camera_possition)
+            point.update_cords(new_cords)
 
 def center_of_mass(points):
     # each point has a mass of 1 unit
