@@ -10,6 +10,7 @@ This project is a simple 3D renderer implemented in Python using Pygame. It feat
 - Colorful entities with customizable colors
 - Rasterization with adjustable segment counts for FPS optimization
 - Backface culling (only visible faces are rendered)
+- Moving the camer left, right, back and forward
 
 ## Installation
 ### Prerequisites
@@ -28,23 +29,29 @@ To install Pygame, run the following command in your terminal or command prompt:
 ```
 
 ## Project Structure
-1. body/ *# 3D object definitions*
-- cube/ # Cube implementation
-- pyramid/ # Pyramid implementation
-2. math3d/ *# 3D math operations*
-- projection.py *# Projection calculations*
-- rotation.py *# Rotation transformations*
-- plane_vector.py *# Visibility calculations*
-3. point/ *# Point class*
-4. triangle/ *# Triangle class*
-5. constants/ *# Render constants*
-6. main.py *# Main application entry point*
+1. body/ - **3D object definitions**
+- cube/ **Cube implementation**
+- pyramid/ **Pyramid implementation**
+2. math3d/ **3D math operations**
+- projection.py **Projection calculations**
+- rotation.py **Rotation transformations**
+- plane_vector.py **Visibility calculations**
+3. point/ **Point class**
+4. triangle/ **Triangle class**
+5. constants/ **Render constants**
+6. main.py **Main application entry point**
 
 
 ## Customization
-Color and FOV can be cahanged in the constants/ package
+Color and FOV can be cahanged in the **constants/** package
 
 ## Screenshot of what the renderer looks like
 ![screenshot](scr.PNG)
+
+## Controls
+1. W - move camera forward
+2. A - move camera to the left
+3. S - move camera backward
+4. D - move camera to the right
 
 #### TO DO: make demo video
