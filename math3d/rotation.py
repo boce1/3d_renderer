@@ -18,20 +18,31 @@ def multiply_matrices(point, rotation_matrix):
 
 # if rotate_around_center==Fals , entity rotate around (0,0,0)
 
-def rotate_x(entity, angle, rotate_around_center=True):
+def rotate_x(entity, angle, rotate_around_center=True, camera_possition=Point(0,0,0, BLACK)):
     rotate_x_matrix = [[1, 0, 0],
                        [0, cos(angle), -sin(angle)],
                        [0, sin(angle), cos(angle)]]
     
-    for point in entity.points:
-        if rotate_around_center:
-            temp_point = Point(point.x - entity.center.x, point.y - entity.center.y, point.z - entity.center.z, BLACK)
+    if rotate_around_center:
+        #body_center = Point(entity.center.x+camera_possition.x, entity.center.y+camera_possition.y, entity.center.z+camera_possition.z, BLACK)
+        for point in entity.points:
+            temp_point = Point(point.x - entity.center.x, 
+                               point.y - entity.center.y, 
+                               point.z - entity.center.z, BLACK)
             new_cords = multiply_matrices(temp_point, rotate_x_matrix)
             new_cords = update_cord_list(new_cords, entity.center)
-        else:
-            new_cords = multiply_matrices(point, rotate_x_matrix)
 
-        point.update_cords(new_cords)
+            point.update_cords(new_cords)
+
+    else:
+        for point in entity.points:
+            temp_point = Point(point.x - camera_possition.x, 
+                               point.y - camera_possition.y, 
+                               point.z - camera_possition.z, BLACK)
+            new_cords = multiply_matrices(temp_point, rotate_x_matrix)
+            new_cords = update_cord_list(new_cords, camera_possition)
+            point.update_cords(new_cords)
+
 
 def rotate_y(entity, angle, rotate_around_center=True):
     rotate_y_matrix = [[cos(angle), 0, sin(angle)],

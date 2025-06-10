@@ -5,6 +5,7 @@ from point import *
 from constants import *
 from triangle import *
 from body import *
+from camera import *
 
 pg.init()
 
@@ -20,6 +21,8 @@ p1 = Pyramid(Point(0, 30, 5, YELLOW), 15, 8, 8)
 rainbow_body(c1, (RED, BLUE, GREEN, YELLOW))
 rainbow_body(p1, (RED, YELLOW))
 
+camera = Camera()
+
 angle1 = pi / 90
 angle2 = -pi / 45
 angle3 = pi / 60
@@ -29,10 +32,10 @@ angle3 = pi / 60
 def draw(win):
     win.fill(WHITE)
 
-    c1.draw(win)
-    c2.draw(win)
+    #c1.draw(win)
+    #c2.draw(win)
     c3.draw(win)
-    p1.draw(win)
+    #p1.draw(win)
     #t1.draw(win)
 
     pg.display.update()
@@ -40,26 +43,29 @@ def draw(win):
 run = True
 clock = pg.time.Clock()
 while run:
+    key_pressed = pg.key.get_pressed()
+    camera.move(key_pressed, (c1, c2, c3, p1))
+
     clock.tick(FPS)
     draw(window)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
 
-    rotate_x(c1, angle1, False)
-    rotate_y(c1, angle1, True)
-    rotate_z(c1, angle1, True)
-
-    rotate_x(c2, angle1, True)
-    rotate_y(c2, angle2, False)
-    rotate_z(c2, angle3, True)
-
-    rotate_x(c3, angle1, False)
-    rotate_y(c3, angle2, False)
-
-    rotate_y(p1, angle2, True)
-    rotate_x(p1, angle1, True)
-    rotate_z(p1, angle3, True)
+    #rotate_x(c1, angle1, False, camera.possition)
+    #rotate_y(c1, angle1, True)
+    #rotate_z(c1, angle1, True)
+#
+    #rotate_x(c2, angle1, False, camera.possition)
+    #rotate_y(c2, angle2, False)
+    #rotate_z(c2, angle3, True)
+#
+    rotate_x(c3, angle1, False, camera.possition)
+    #rotate_y(c3, angle2, True)
+#
+    #rotate_y(p1, angle2, True)
+    #rotate_x(p1, angle1, True)
+    #rotate_z(p1, angle3, True)
 
 pg.quit()
 
