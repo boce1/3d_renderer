@@ -45,5 +45,21 @@ class Camera:
                 for p in b.points:
                     p.update_cords((p.x-self.speed, p.y, p.z))
 
+        if key_pressed[pg.K_SPACE]:
+            self.y -= self.speed
+            self.update_possition()
+
+            for b in bodies:
+                for p in b.points:
+                    p.update_cords((p.x, p.y-self.speed, p.z))
+        
+        if key_pressed[pg.K_LSHIFT]:
+            self.y += self.speed
+            self.update_possition()
+
+            for b in bodies:
+                for p in b.points:
+                    p.update_cords((p.x, p.y+self.speed, p.z)) 
+
     def update_possition(self):
         self.possition = Point(self.x, self.y, self.z, BLACK)
