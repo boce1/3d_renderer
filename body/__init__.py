@@ -1,5 +1,6 @@
 from .cube import *
 from .pyramid import *
+from .wrapper import *
 
 def rainbow_body(entity, color_list):
     for i in range(len(entity.points)):

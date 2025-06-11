@@ -10,7 +10,7 @@ class Camera:
 
         self.possition = Point(self.x, self.y, self.z, BLACK)
 
-        self.speed = 3
+        self.speed = 2
 
     def move(self, key_pressed, bodies):
         if key_pressed[pg.K_w]:

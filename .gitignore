@@ -5,4 +5,5 @@ triangle/__pycache__
 body/__pycache__
 body/cube/__pycache__
 body/pyramid/__pycache__
+body/wrapper/__pycache__
 camera/__pycache__
