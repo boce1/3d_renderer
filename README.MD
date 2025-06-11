@@ -53,5 +53,7 @@ Color and FOV can be cahanged in the **constants/** package
 2. A - move camera to the left
 3. S - move camera backward
 4. D - move camera to the right
+5. LEFT_SHIFT - move camera down
+6. SPACE - move camera up
 
 #### TO DO: make demo video

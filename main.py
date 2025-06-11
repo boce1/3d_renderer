@@ -31,8 +31,6 @@ wrapper.add(p1, angle2, True, angle1, True, angle3, True)
 
 camera = Camera()
 
-#t1 = Triangle(Point(-5 , -10, 0, RED), Point(-10, 5, 0, GREEN), Point(10, 5, 0, BLUE))
-
 def draw(win, camera_position):
     win.fill(WHITE)
 
